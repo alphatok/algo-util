@@ -1,2 +1,2 @@
 # algo-util
-basic util
+basic algorithm util
