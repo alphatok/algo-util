@@ -4,6 +4,38 @@ package com.alphatok.util;
 import com.alphatok.domain.ListNode;
 
 public class ListNodeUtil{
+
+	public static int length(ListNode head){
+		int len = 0;
+		while (head != null){
+			head = head.next;
+			len++;
+		}
+
+		return len;
+	}
+
+	public static boolean equals(ListNode a, ListNode b){
+		if (length(a) != length(b)){
+			return false;
+		}
+
+		while (a != null || b != null){
+			if (a != null && b != null){
+				if (a.val != b.val){
+					return false;
+				}
+				a = a.next;
+				b = b.next;
+			} else if (a == null && b != null){
+				return false;
+			} else if (a != null && b == null){
+				return false;
+			}
+		}
+
+		return true;
+	}
 	
 	public static void print(ListNode head) {
 		if (null == head){

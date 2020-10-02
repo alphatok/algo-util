@@ -1,6 +1,7 @@
 package com.alphatok.util;
 
 import com.alphatok.domain.ListNode;
+import com.alphatok.domain.ListNodeBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,5 +82,35 @@ public class ListNodeUtilTest {
         ListNode listNode = new ListNode(1);
         listNode.next = new ListNode(2);
         Assert.assertEquals(2, ListNodeUtil.countNode(listNode));
+    }
+
+    @Test
+    public void testLength() {
+        Assert.assertEquals(0, ListNodeUtil.length(null));
+        Assert.assertEquals(1, ListNodeUtil.length(new ListNode(1)));
+
+        Assert.assertEquals(2, ListNodeUtil.length(new ListNodeBuilder(1).append(2).getHead()));
+        Assert.assertEquals(5, ListNodeUtil.length(new ListNodeBuilder(1).append(new int[]{2,3,4,5}).getHead()));
+    }
+
+    @Test
+    public void testTestEquals() {
+        Assert.assertTrue(ListNodeUtil.equals(null, null));
+        Assert.assertTrue(ListNodeUtil.equals(new ListNode(+2), new ListNode(2)));
+        Assert.assertTrue(ListNodeUtil.equals(
+                new ListNodeBuilder(1).append(2).getHead(),
+                new ListNodeBuilder(1).append(2).getHead()));
+
+        Assert.assertFalse(ListNodeUtil.equals(null, new ListNode(1)));
+        Assert.assertFalse(ListNodeUtil.equals(new ListNode(1), null));
+        Assert.assertFalse(ListNodeUtil.equals(new ListNode(1), new ListNode(2)));
+
+        Assert.assertFalse(ListNodeUtil.equals(
+                new ListNodeBuilder(1).append(2).getHead(),
+                new ListNodeBuilder(1).append(2).append(3).getHead()));
+
+        Assert.assertFalse(ListNodeUtil.equals(
+                new ListNodeBuilder(1).append(2).append(4).getHead(),
+                new ListNodeBuilder(1).append(2).append(3).getHead()));
     }
 }
