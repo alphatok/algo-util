@@ -255,7 +255,7 @@ public class CollectionUtil {
             if (e == null) {
                 builder.append(",null");
             } else {
-                builder.append("," + e.toString());
+                builder.append(",").append(e.toString());
             }
         }
 
@@ -268,7 +268,7 @@ public class CollectionUtil {
             if (e == null) {
                 builder.append(",null");
             } else {
-                builder.append("," + e.toString());
+                builder.append(",").append(e.toString());
             }
         }
         System.out.println(builder.substring(1, builder.length()));
@@ -277,12 +277,12 @@ public class CollectionUtil {
     public static void print(int[] objs) {
         StringBuilder builder = new StringBuilder();
         for (int e : objs) {
-            builder.append("," + e);
+            builder.append(",").append(e);
         }
         System.out.println(builder.substring(1, builder.length()));
     }
 
     public static void main(String[] args) {
-        print(Arrays.asList(new Integer[]{1, 34, 4, 5, 5, 2}));
+        print(Arrays.asList(1, 34, 4, 5, 5, 2));
     }
 }
