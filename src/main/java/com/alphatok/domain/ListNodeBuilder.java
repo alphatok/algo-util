@@ -12,6 +12,14 @@ public class ListNodeBuilder {
         last = head;
     }
 
+    public ListNodeBuilder(int[] vals) {
+        head = new ListNode(vals[0]);
+        last = head;
+        for (int i = 1; i < vals.length; i++) {
+            append(vals[i]);
+        }
+    }
+
     public ListNodeBuilder append(int val){
         ListNode tmp = new ListNode(val);
         last.next = tmp;

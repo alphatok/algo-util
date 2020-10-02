@@ -5,6 +5,8 @@ import com.alphatok.domain.ListNodeBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 
 public class ListNodeUtilTest {
 
@@ -112,5 +114,42 @@ public class ListNodeUtilTest {
         Assert.assertFalse(ListNodeUtil.equals(
                 new ListNodeBuilder(1).append(2).append(4).getHead(),
                 new ListNodeBuilder(1).append(2).append(3).getHead()));
+    }
+
+    @Test
+    public void testSortAsc() {
+        {
+            assertArrayEquals(new int[]{1}, ListNodeUtil.toArray(ListNodeUtil.sortAsc(new ListNode(1))));
+        }
+
+        {
+            int[] vals = {-10, 1, 4, 9, 10};
+            int[] vals2 = {10, 9, 1, 4, -10};
+            ListNode listNode = new ListNodeBuilder(vals2).getHead();
+            assertArrayEquals(vals, ListNodeUtil.toArray(ListNodeUtil.sortAsc(listNode)));
+        }
+
+        {
+            ListNode listNode = new ListNode(2);
+            listNode.next = new ListNode(1);
+            assertArrayEquals(new int[]{1,2}, ListNodeUtil.toArray(ListNodeUtil.sortAsc(listNode)));
+        }
+    }
+
+    @Test
+    public void toLinkedList() {
+        int[] array = {1, 2, 3, 4};
+        ListNode list = ListNodeUtil.toLinkedList(array);
+        assertEquals(1, list.getVal());
+        assertEquals(2, list.getNext().getVal());
+        assertEquals(3, list.getNext().getNext().getVal());
+        assertEquals(4, list.getNext().getNext().getNext().getVal());
+        assertNull("null", list.getNext().getNext().getNext().getNext());
+    }
+
+    @Test
+    public void testToArray() {
+        ListNode list = new ListNodeBuilder(1).append(new int[]{2,3,4}).getHead();
+        assertArrayEquals(new int[]{1,2,3,4}, ListNodeUtil.toArray(list));
     }
 }
