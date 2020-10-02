@@ -17,17 +17,17 @@ public class ListNodeUtil{
         }
         
         System.out.print(head.val); 
-        System.out.println();  
+        System.out.println("->nil");
     }
 	
 	public static String toBigInt(ListNode head) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
         while (head != null) {  
         	buffer.append(head.val);  
             head = head.next;  
         }
         
-        return buffer.reverse().toString();
+        return buffer.toString();
     }
 
 	public static ListNode toListNodes(int[] arr) {
@@ -45,13 +45,6 @@ public class ListNodeUtil{
 		return head;
 	}
 
-
-
-	public static void main(String[] args) {
-		System.out.println(countNode(new ListNode(2)));
-		System.out.println(countNode(toListNodes(new int[]{1,2,3})));
-		System.out.println(countNode(null));
-	}
 
 	public static int countNode(ListNode listNode) {
 		if (listNode == null) {
