@@ -18,11 +18,23 @@ public class ListNodeBuilderTest {
 
     @Test
     public void testTestAppend() {
-        ListNodeBuilder builder = new ListNodeBuilder(1).append(new int[]{2,3});
+        ListNodeBuilder builder = new ListNodeBuilder(1).append(new int[]{2,3}).append(new ListNode(4));
         ListNode head = builder.getHead();
         Assert.assertEquals(1, head.val);
         Assert.assertEquals(2, head.next.val);
         Assert.assertEquals(3, head.next.next.val);
-        Assert.assertNull(head.next.next.next);
+        Assert.assertEquals(4, head.next.next.next.val);
+        Assert.assertNull(head.next.next.next.next);
+    }
+
+    @Test
+    public void testStrBuilder(){
+        ListNodeBuilder builder = ListNodeBuilder.create("1").append("2,3").append(4);
+        ListNode head = builder.getHead();
+        Assert.assertEquals(1, head.val);
+        Assert.assertEquals(2, head.next.val);
+        Assert.assertEquals(3, head.next.next.val);
+        Assert.assertEquals(4, head.next.next.next.val);
+        Assert.assertNull(head.next.next.next.next);
     }
 }

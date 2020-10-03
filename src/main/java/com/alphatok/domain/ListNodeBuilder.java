@@ -1,17 +1,37 @@
 package com.alphatok.domain;
 
-import java.util.List;
-
 public class ListNodeBuilder {
 
     private ListNode head = null;
     private ListNode last = null;
 
+    public final static String SEPARATOR = ",";
+    /**
+     * separated by ,
+     * @param str
+     * @return
+     */
+    public static ListNodeBuilder create(String str){
+        int[] vals = parseInts(str);
+        return new ListNodeBuilder(vals);
+    }
+
+    private static int[] parseInts(String str) {
+        String[] strs = str.split(SEPARATOR);
+        int[] vals = new int[strs.length];
+        for (int i = 0; i < strs.length; i++) {
+            vals[i] = Integer.parseInt(strs[i]);
+        }
+        return vals;
+    }
+
+    @Deprecated
     public ListNodeBuilder(int headVal) {
         head = new ListNode(headVal);
         last = head;
     }
 
+    @Deprecated
     public ListNodeBuilder(int[] vals) {
         head = new ListNode(vals[0]);
         last = head;
@@ -27,6 +47,17 @@ public class ListNodeBuilder {
         return this;
     }
 
+    public ListNodeBuilder append(ListNode node){
+        last.next = node;
+        last = node;
+        return this;
+    }
+
+    public ListNodeBuilder append(String str){
+        return append(parseInts(str));
+    }
+
+    @Deprecated
     public ListNodeBuilder append(int[] vals){
         for (int val : vals) {
             append(val);
