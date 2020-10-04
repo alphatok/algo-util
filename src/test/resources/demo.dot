@@ -1,0 +1,23 @@
+digraph G {
+    No2 [label=2];
+    No1 [label=1];
+    No4 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No3 [label=30];
+    No6 [label=4];
+    No11 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No5 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No10 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No8 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No7 [color=grey,fontcolor=grey,label=nil,shape=none];
+    No9 [label=-5];
+    No9->No11 [color=grey,fontcolor=grey];
+    No2->No5 [color=grey,fontcolor=grey];
+    No3->No6 [];
+    No6->No9 [];
+    No3->No7 [color=grey,fontcolor=grey];
+    No9->No10 [color=grey,fontcolor=grey];
+    No1->No2 [];
+    No1->No3 [];
+    No2->No4 [color=grey,fontcolor=grey];
+    No6->No8 [color=grey,fontcolor=grey];
+}
