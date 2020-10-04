@@ -9,6 +9,11 @@ import java.util.concurrent.TimeUnit;
  * source: https://blog.csdn.net/qq_18208435/article/details/70464654
  */
 public class GraphViz {
+
+    private String START_LINE = "digraph G {\n";
+    private String END_LINE = "digraph G {\n";
+
+
     private String runPath = "";
     private String dotPath = "";
     private String runOrder = "";
@@ -73,12 +78,13 @@ public class GraphViz {
     }
 
     public void start_graph() {
-        graph.append("digraph G {\n");
+
+        graph.append(START_LINE);
 //        graph.append("node [style=filled color=\"#C0FF3E\"]\n");
 //        graph.append("edge [color=\"sienna\" fontcolor=\"green\"]\n");
     }
 
     public void end_graph() {
-        graph.append("}");
+        graph.append(END_LINE);
     }
 }

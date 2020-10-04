@@ -21,7 +21,7 @@ public class GraphUtilTest {
 
     @Test
     public void paintAndOpenBuilder() throws IOException, InterruptedException {
-        TreeNodeLevelBuilder builder = TreeNodeLevelBuilder.create("1,2,3,#,#,4,#,#,5");
+        TreeNodeLevelBuilder builder = TreeNodeLevelBuilder.create("1,2,30,#,#,4,#,#,-5");
         TreeNode root = builder.build();
         GraphUtil.paintAndOpen(root);
     }
