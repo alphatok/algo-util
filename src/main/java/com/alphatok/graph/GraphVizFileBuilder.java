@@ -10,8 +10,8 @@ public abstract class GraphVizFileBuilder {
 
     public final static Map<String, String> WHITE_ALL = new HashMap<>(2);
     static {
-        WHITE_ALL.put("color", "white");
-        WHITE_ALL.put("fontcolor", "white");
+        WHITE_ALL.put("color", "grey");
+        WHITE_ALL.put("fontcolor", "grey");
     }
 
     public abstract StringBuilder build();

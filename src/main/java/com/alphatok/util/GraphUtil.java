@@ -1,21 +1,29 @@
 package com.alphatok.util;
 
-import com.alphatok.domain.ListNode;
 import com.alphatok.domain.TreeNode;
-import com.alphatok.graph.GraphViz;
+import com.alphatok.graph.tree.GraphVizTreeFileBuilder;
 
 import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GraphUtil {
 
-    private static String TMP_PATH = "F:\\github\\algo-util\\target";
+    private static String TMP_PATH;
+    static {
+        File directory = new File("");
+        try {
+            TMP_PATH = directory.getCanonicalPath() + File.separator + "target";
+        } catch (IOException e) {
+            TMP_PATH = "/tmp";
+        }
+    }
+    // TODO REFACTOR
     private static String DOT_PATH = "C:\\Program Files\\Graphviz 2.44.1\\bin\\dot.exe";
 
     static ThreadLocal<HashMap<TreeNode, Integer>> NODE_ID_CACHE = new ThreadLocal<>();
@@ -27,95 +35,44 @@ public class GraphUtil {
             return;
         }
 
-        GraphViz gViz = new GraphViz(TMP_PATH, DOT_PATH);
-        gViz.start_graph();
+        StringBuilder fileContent = GraphVizTreeFileBuilder.create(node).build();
+        File tmpPath = new File(TMP_PATH);
+        if (!tmpPath.exists()) {
+            tmpPath.mkdirs();
+        }
+        String dotfile = TMP_PATH + File.separator + System.currentTimeMillis() + ".dot";
+        String paintfile = TMP_PATH + File.separator + System.currentTimeMillis() + ".gif";
+        writeGraphToFile(fileContent.toString(), dotfile);
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(node);
+        paintViz(dotfile, paintfile);
+        openByDefaultImageView(paintfile);
+    }
 
-        LinkedHashMap<TreeNode, Integer> nodeMap = new LinkedHashMap<>();
-        NODE_ID_CACHE.set(nodeMap);
-        NO_INC_CACHE.set(new AtomicInteger(1));
-        gViz.addln("forcelabels=true;");
+    public static void paintViz(String dotfile, String paintfile) throws IOException, InterruptedException {
+        String comand = String.format("%s %s -Tgif -o %s", DOT_PATH, dotfile, paintfile);
+        Runtime runtime = Runtime.getRuntime();
+        System.out.println("comand = " + comand);
+        Process exec = runtime.exec(comand);
+        exec.waitFor(10, TimeUnit.SECONDS);
+    }
+
+    public static void writeGraphToFile(String fileContent, String filename) {
         try {
-            while (!queue.isEmpty()) {
-                TreeNode p = queue.poll();
-                gViz.addln(getNodeIdLabel(p));
-                gViz.addNode(String.format("%s;", getNodeId(p)));
-
-                TreeNode left = p.left;
-                if (left != null) {
-                    gViz.addln(getNodeIdLabel(left));
-                    gViz.addln(String.format("%s->%s;", getNodeId(p), getNodeId(left)));
-                    queue.add(left);
-                }else{
-                    TreeNode random = random();
-                    gViz.addln(getNodeIdLabelBlank(random));
-                    gViz.addln(String.format("%s->%s;", getNodeId(p), getNodeId(random)));
-                }
-
-                TreeNode right = p.right;
-                if (right != null) {
-                    gViz.addln(getNodeIdLabel(right));
-                    gViz.addln(String.format("%s->%s;", getNodeId(p), getNodeId(right)));
-                    queue.add(right);
-                }else{
-                    TreeNode random = random();
-                    gViz.addln(getNodeIdLabelBlank(random));
-                    gViz.addln(String.format("%s->%s;", getNodeId(p), getNodeId(random)));
+            File file = new File(filename);
+            if (!file.exists()) {
+                boolean newFile = file.createNewFile();
+                if (!newFile) {
+                    throw new RuntimeException("failed to create file:" + filename);
                 }
             }
-        } finally {
-            NODE_ID_CACHE.remove();
-            NO_INC_CACHE.remove();
+            try(FileWriter fileWriter = new FileWriter(file.getAbsoluteFile())) {
+                try( BufferedWriter bw = new BufferedWriter(fileWriter)) {
+                    bw.write(fileContent);
+                }
+            }
+        } catch (java.io.IOException ioe) {
+            throw new RuntimeException("failed to write file:" + filename);
         }
-
-        gViz.end_graph();
-        gViz.run();
-
-        String fileName = "F:\\github\\algo-util\\target\\dotGif.gif";
-        try {
-            openByDefaultImageView(fileName);
-        } catch (IOException e) {
-            throw new RuntimeException("failed to open file: " + fileName);
-        }
-    }
-
-    public static TreeNode random(){
-        return new TreeNode(-1);
-    }
-
-    private static String getNodeId(TreeNode p) {
-        HashMap<TreeNode, Integer> nodeMap = NODE_ID_CACHE.get();
-        Integer no = nodeMap.get(p);
-        if (no == null) {
-            no = NO_INC_CACHE.get().getAndIncrement();
-            nodeMap.put(p, no);
-        }
-
-        return String.format("Node%s", no);
-    }
-
-    private static String getNodeIdLabel(TreeNode p) {
-        HashMap<TreeNode, Integer> nodeMap = NODE_ID_CACHE.get();
-        Integer no = nodeMap.get(p);
-        if (no == null) {
-            no = NO_INC_CACHE.get().getAndIncrement();
-            nodeMap.put(p, no);
-        }
-
-        return String.format("Node%s [label=%s] ", no, p.val);
-    }
-
-    private static String getNodeIdLabelBlank(TreeNode p) {
-        HashMap<TreeNode, Integer> nodeMap = NODE_ID_CACHE.get();
-        Integer no = nodeMap.get(p);
-        if (no == null) {
-            no = NO_INC_CACHE.get().getAndIncrement();
-            nodeMap.put(p, no);
-        }
-
-        return String.format("Node%s [label=nil] ", no, p.val);
     }
 
     public static void openByDefaultImageView(String fileName) throws IOException {
