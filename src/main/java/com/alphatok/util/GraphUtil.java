@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Formatter;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 public class GraphUtil {
 
@@ -30,7 +33,7 @@ public class GraphUtil {
     static ThreadLocal<AtomicInteger> NO_INC_CACHE = new ThreadLocal<>();
 
 
-    public static void paintAndOpen(TreeNode node) throws IOException, InterruptedException {
+    public static void paintAndOpen(TreeNode node, boolean open) throws IOException, InterruptedException {
         if (node == null) {
             return;
         }
@@ -45,7 +48,9 @@ public class GraphUtil {
         writeGraphToFile(fileContent.toString(), dotfile);
 
         paintViz(dotfile, paintfile);
-        openByDefaultImageView(paintfile);
+        if (open) {
+            openByDefaultImageView(paintfile);
+        }
     }
 
     public static void paintViz(String dotfile, String paintfile) throws IOException, InterruptedException {
@@ -79,14 +84,5 @@ public class GraphUtil {
         File f = new File(fileName);
         Desktop dt = Desktop.getDesktop();
         dt.open(f);
-        System.out.println("Done.");
-    }
-
-    public static void openByDefaultImageViewCmdline(String fileName) throws IOException, InterruptedException {
-        String [] commands = {
-                "cmd.exe","/c","start","\"DummyTitle\"","\"" + fileName + "\""
-        };
-        Process p = Runtime.getRuntime().exec(commands);
-        p.waitFor();
     }
 }

@@ -2,6 +2,7 @@ package com.alphatok.util;
 
 import com.alphatok.domain.TreeNode;
 import com.alphatok.domain.TreeNodeLevelBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,7 +16,7 @@ public class GraphUtilTest {
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
         root.left.left = new TreeNode(4);
-        GraphUtil.paintAndOpen(root);
+        GraphUtil.paintAndOpen(root, false);
     }
 
     @Test
@@ -59,30 +60,25 @@ public class GraphUtilTest {
         GraphUtil.writeGraphToFile(content, filename);
     }
 
-
     @Test
     public void paintAndOpenBuilder() throws IOException, InterruptedException {
         TreeNodeLevelBuilder builder = TreeNodeLevelBuilder.create("1,2,30,#,#,4,#,#,-5");
         TreeNode root = builder.build();
-        GraphUtil.paintAndOpen(root);
+        GraphUtil.paintAndOpen(root, false);
     }
 
     @Test
-    public void openByDefaultImageView() {
-        try {
-            GraphUtil.openByDefaultImageView("E:\\background\\WeChat Image_20200214210752.jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Ignore
+    public void openByDefaultImageView()  throws IOException, InterruptedException {
+        String imagePath = getImagePath();
+        GraphUtil.openByDefaultImageView(imagePath);
     }
 
-    @Test
-    public void openByDefaultImageViewCmdline() {
-        try {
-            GraphUtil.openByDefaultImageViewCmdline("E:\\background\\WeChat Image_20200214210752.jpg");
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+
+    private String getImagePath() throws IOException {
+        File directory = new File("");
+        String courseFile = directory.getCanonicalPath();
+        return courseFile + File.separator +  "src\\test\\resources\\read.jpg";
     }
 
 }

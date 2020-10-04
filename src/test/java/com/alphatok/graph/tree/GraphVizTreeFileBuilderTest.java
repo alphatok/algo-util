@@ -14,11 +14,11 @@ public class GraphVizTreeFileBuilderTest {
         String fileContent = builder.build().toString();
         System.out.println("fileContent = " + fileContent);
         String expected = "digraph G {\n" +
-                "    No2 [color=white,fontcolor=white,virtual=true];\n" +
+                "    No2 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
                 "    No1 [label=1];\n" +
-                "    No3 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No1->No2 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No1->No3 [color=white,fontcolor=white,virtual=true];\n" +
+                "    No3 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
+                "    No1->No2 [color=grey,fontcolor=grey];\n" +
+                "    No1->No3 [color=grey,fontcolor=grey];\n" +
                 "}\n";
         assertEquals(expected, fileContent);
     }
@@ -32,17 +32,17 @@ public class GraphVizTreeFileBuilderTest {
         String expected = "digraph G {\n" +
                 "    No2 [label=2];\n" +
                 "    No1 [label=1];\n" +
-                "    No4 [color=white,fontcolor=white,virtual=true];\n" +
+                "    No4 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
                 "    No3 [label=3];\n" +
-                "    No6 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No5 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No7 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No2->No5 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No3->No6 [color=white,fontcolor=white,virtual=true];\n" +
-                "    No3->No7 [color=white,fontcolor=white,virtual=true];\n" +
+                "    No6 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
+                "    No5 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
+                "    No7 [color=grey,fontcolor=grey,label=nil,shape=none];\n" +
+                "    No2->No5 [color=grey,fontcolor=grey];\n" +
+                "    No3->No6 [color=grey,fontcolor=grey];\n" +
+                "    No3->No7 [color=grey,fontcolor=grey];\n" +
                 "    No1->No2 [];\n" +
                 "    No1->No3 [];\n" +
-                "    No2->No4 [color=white,fontcolor=white,virtual=true];\n" +
+                "    No2->No4 [color=grey,fontcolor=grey];\n" +
                 "}\n";
         assertEquals(expected, fileContent);
     }
