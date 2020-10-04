@@ -9,11 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Formatter;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 public class GraphUtil {
 
@@ -27,7 +23,7 @@ public class GraphUtil {
         }
     }
     // TODO REFACTOR
-    private static String DOT_PATH = "C:\\Program Files\\Graphviz 2.44.1\\bin\\dot.exe";
+    private static String DOT_COMMAND = "dot";
 
     static ThreadLocal<HashMap<TreeNode, Integer>> NODE_ID_CACHE = new ThreadLocal<>();
     static ThreadLocal<AtomicInteger> NO_INC_CACHE = new ThreadLocal<>();
@@ -43,22 +39,20 @@ public class GraphUtil {
         if (!tmpPath.exists()) {
             tmpPath.mkdirs();
         }
-        String dotfile = TMP_PATH + File.separator + System.currentTimeMillis() + ".dot";
-        String paintfile = TMP_PATH + File.separator + System.currentTimeMillis() + ".gif";
-        writeGraphToFile(fileContent.toString(), dotfile);
+        String dotfileName = System.currentTimeMillis() + ".dot";
+        String paintFileName = System.currentTimeMillis() + ".gif";
+        RuntimeUtil.execCommand("cd " + tmpPath);
+        writeGraphToFile(fileContent.toString(), dotfileName);
 
-        paintViz(dotfile, paintfile);
+        paintViz(dotfileName, paintFileName);
         if (open) {
-            openByDefaultImageView(paintfile);
+            openByDefaultImageView(paintFileName);
         }
     }
 
     public static void paintViz(String dotfile, String paintfile) throws IOException, InterruptedException {
-        String comand = String.format("%s %s -Tgif -o %s", DOT_PATH, dotfile, paintfile);
-        Runtime runtime = Runtime.getRuntime();
-        System.out.println("comand = " + comand);
-        Process exec = runtime.exec(comand);
-        exec.waitFor(10, TimeUnit.SECONDS);
+        String command = String.format("%s %s -Tgif -o %s", DOT_COMMAND, dotfile, paintfile);
+        RuntimeUtil.execCommand(command);
     }
 
     public static void writeGraphToFile(String fileContent, String filename) {

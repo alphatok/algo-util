@@ -11,14 +11,25 @@ import static org.junit.Assert.*;
 public class RuntimeUtilTest {
 
     private String getImagePath() throws IOException {
+        String projecRoot = getProjectRoot();
+        return projecRoot + File.separator +  "src\\test\\resources\\read.jpg";
+    }
+
+    private String getProjectRoot() throws IOException {
         File directory = new File("");
-        String courseFile = directory.getCanonicalPath();
-        return courseFile + File.separator +  "src\\test\\resources\\read.jpg";
+        return directory.getCanonicalPath();
     }
 
     @Test
     @Ignore
     public void openFile() throws IOException {
-        RuntimeUtil.openFile(getImagePath());
+        System.out.println("RuntimeUtil.openFile(getImagePath()) = " + RuntimeUtil.openFile(getImagePath()));
+    }
+
+    @Test
+    public void execCommand() throws IOException {
+        String projecRoot = getProjectRoot();
+        RuntimeUtil.execCommand("cd " + projecRoot);
+        System.out.println("RuntimeUtil.execCommand(\"dir \") = " + RuntimeUtil.execCommand("dir "));
     }
 }
