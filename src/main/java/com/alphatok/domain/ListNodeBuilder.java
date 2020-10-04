@@ -12,7 +12,7 @@ public class ListNodeBuilder {
      * @return
      */
     public static ListNodeBuilder create(String str){
-        int[] vals = parseInts(str);
+        int[] vals = parseInts(str.trim());
         return new ListNodeBuilder(vals);
     }
 
@@ -20,7 +20,7 @@ public class ListNodeBuilder {
         String[] strs = str.split(SEPARATOR);
         int[] vals = new int[strs.length];
         for (int i = 0; i < strs.length; i++) {
-            vals[i] = Integer.parseInt(strs[i]);
+            vals[i] = Integer.parseInt(strs[i].trim());
         }
         return vals;
     }
@@ -54,7 +54,7 @@ public class ListNodeBuilder {
     }
 
     public ListNodeBuilder append(String str){
-        return append(parseInts(str));
+        return append(parseInts(str.trim()));
     }
 
     @Deprecated

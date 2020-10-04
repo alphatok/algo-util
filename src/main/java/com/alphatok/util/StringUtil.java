@@ -62,7 +62,7 @@ public class StringUtil {
             if (decStr.length() != 1) {
                 continue;
             }
-            intArray[size - 1 - index++] = Integer.parseInt(decStr);
+            intArray[size - 1 - index++] = Integer.parseInt(decStr.trim());
         }
 
         return intArray;
@@ -91,7 +91,7 @@ public class StringUtil {
             if (decStr.length() != 1) {
                 continue;
             }
-            intArray[index++] = Integer.parseInt(decStr);
+            intArray[index++] = Integer.parseInt(decStr.trim());
         }
 
         return intArray;

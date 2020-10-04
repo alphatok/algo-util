@@ -2,7 +2,10 @@ package com.alphatok.util;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
@@ -235,5 +238,15 @@ public class CollectionUtilTest {
             int[] arr = {1,2, 3,4,5,6, 7,8,9};
             assertArrayEquals(CollectionUtil.join(arr), new int[]{1,2, 5,6,3,4, 7,8,9}, CollectionUtil.shiftLeftInPlace(arr, 2, 5, 6));
         }
+    }
+
+    @Test
+    public void convert() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        int[] ints = CollectionUtil.convert(list);
+        assertArrayEquals(new int[]{1,2,3}, ints);
     }
 }

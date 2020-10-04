@@ -23,13 +23,14 @@ public class GraphUtilTest {
     public void paintViz() throws IOException, InterruptedException {
         File directory = new File("");
         String projecRoot = directory.getCanonicalPath();
-        String tmpPath = projecRoot + File.separator + "target" + File.separator ;
-        String paintfile = tmpPath + "demo.gif";
+        String tmpPath = projecRoot + File.separator + "src\\test\\resources" ;
+        String paintfile = "demo.gif";
         File destFile = new File(paintfile);
         if (destFile.exists()) {
             destFile.delete();
         }
-        GraphUtil.paintViz(tmpPath + "demo.dot", paintfile);
+        RuntimeUtil.execCommand("cd " + tmpPath);
+        GraphUtil.paintViz("demo.dot", paintfile);
     }
 
     @Test
@@ -65,6 +66,13 @@ public class GraphUtilTest {
         TreeNodeLevelBuilder builder = TreeNodeLevelBuilder.create("1,2,30,#,#,4,#,#,-5");
         TreeNode root = builder.build();
         GraphUtil.paintAndOpen(root, false);
+    }
+
+    @Test
+    public void paintAndOpenBuilder2() throws IOException, InterruptedException {
+        TreeNodeLevelBuilder builder = TreeNodeLevelBuilder.create("1,2,3,4,5,6,7,8,9,#,#,1,1,#,#,#,#,99,8,#,#,#,#,#,2");
+        TreeNode root = builder.build();
+        GraphUtil.paintAndOpen(root, true);
     }
 
     @Test

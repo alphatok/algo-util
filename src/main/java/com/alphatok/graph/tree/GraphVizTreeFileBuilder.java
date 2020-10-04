@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GraphVizTreeFileBuilder extends GraphVizFileBuilder {
 
-    private Set<GraphVizTreeNode> nodes = new HashSet<>();
-    private Set<GraphVizTreeEdge> edges = new HashSet<>();
+    private final Set<GraphVizTreeNode> nodes = new LinkedHashSet<>();
+    private final Set<GraphVizTreeEdge> edges = new LinkedHashSet<>();
 
     static ThreadLocal<HashMap<TreeNode, Integer>> NODE_ID_CACHE = new ThreadLocal<>();
     static ThreadLocal<AtomicInteger> NO_INC_CACHE = new ThreadLocal<>();

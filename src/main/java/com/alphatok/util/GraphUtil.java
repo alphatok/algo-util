@@ -25,10 +25,6 @@ public class GraphUtil {
     // TODO REFACTOR
     private static String DOT_COMMAND = "dot";
 
-    static ThreadLocal<HashMap<TreeNode, Integer>> NODE_ID_CACHE = new ThreadLocal<>();
-    static ThreadLocal<AtomicInteger> NO_INC_CACHE = new ThreadLocal<>();
-
-
     public static void paintAndOpen(TreeNode node, boolean open) throws IOException, InterruptedException {
         if (node == null) {
             return;

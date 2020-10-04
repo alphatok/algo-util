@@ -282,7 +282,17 @@ public class CollectionUtil {
         System.out.println(builder.substring(1, builder.length()));
     }
 
-    public static void main(String[] args) {
-        print(Arrays.asList(1, 34, 4, 5, 5, 2));
+    public static int[] convert(Collection<Integer> collection){
+        if (collection.isEmpty()) {
+            return new int[]{};
+        }
+
+        int[] result = new int[collection.size()];
+        Integer[] ints = collection.toArray(new Integer[0]);
+        for (int i = 0; i < ints.length; i++) {
+            result[i] = ints[i];
+        }
+
+        return result;
     }
 }

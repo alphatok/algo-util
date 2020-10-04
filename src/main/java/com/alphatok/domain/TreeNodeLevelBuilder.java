@@ -30,7 +30,7 @@ public class TreeNodeLevelBuilder {
         }
 
         int idx = 0;
-        root = new TreeNode(Integer.parseInt(nodes[idx]));
+        root = new TreeNode(Integer.parseInt(nodes[idx].trim()));
         Queue<TreeNode> level = new LinkedList<>();
         level.add(root);
         while(!level.isEmpty()){
@@ -39,7 +39,7 @@ public class TreeNodeLevelBuilder {
             idx++;
             if (idx < nodes.length){
                 if (!EMPTY_NODE.equals(nodes[idx])) {
-                    front.left = new TreeNode(Integer.parseInt(nodes[idx]));
+                    front.left = new TreeNode(Integer.parseInt(nodes[idx].trim()));
                     level.add(front.left);
                 }
             }
@@ -47,7 +47,7 @@ public class TreeNodeLevelBuilder {
             idx++;
             if (idx < nodes.length){
                 if (!EMPTY_NODE.equals(nodes[idx])) {
-                    front.right = new TreeNode(Integer.parseInt(nodes[idx]));
+                    front.right = new TreeNode(Integer.parseInt(nodes[idx].trim()));
                     level.add(front.right);
                 }
             }
